@@ -11,17 +11,27 @@ Utilice el archivo `data.csv` para resolver las preguntas.
 
 
 """
+#importar librerias
+
+import  pandas as pd
+import itertools
+from collections import Counter
+
+#leer los datos
+data = pd.read_csv("C:/Users/ASUS/Desktop/GitHub/trabajo 1/programacion-en-python-carzal/data.csv", encoding='ascii', sep="\t", header= None)
+data
+
+letras = [l for l in data[0]]
+numeros = [n for n in data[1]]
+zipped = sorted(zip(letras,numeros))
 
 
 def pregunta_01():
-    """
-    Retorne la suma de la segunda columna.
+    suma=data[1].sum()
 
-    Rta/
-    214
-
-    """
-    return
+    
+    return suma
+    
 
 
 def pregunta_02():
@@ -39,7 +49,11 @@ def pregunta_02():
     ]
 
     """
-    return
+    df= pd.DataFrame(data[0].value_counts()).reset_index().sort_values(by=0)
+    tuples = [tuple(x) for x in df.values]
+    
+    return tuples    
+    
 
 
 def pregunta_03():
@@ -57,7 +71,11 @@ def pregunta_03():
     ]
 
     """
-    return
+    df=data.groupby(0).agg({1:'sum'}).reset_index().sort_values(by=0)
+
+    tuples = [tuple(x) for x in df.values]
+    return tuples
+    
 
 
 def pregunta_04():
@@ -82,7 +100,15 @@ def pregunta_04():
     ]
 
     """
-    return
+    data[2]=data[2].apply( lambda x: x.replace("1999-02-29", "1999-02-28"))
+    data[2] = pd.to_datetime(data[2], format="%Y-%m-%d")
+    
+    df = data.groupby(data[2].dt.month).agg({2:"count"}).rename(columns={2:'conteo'}).reset_index()
+    tuples = [tuple(x) for x in df.values]
+    
+    return  tuples
+
+
 
 
 def pregunta_05():
@@ -100,10 +126,34 @@ def pregunta_05():
     ]
 
     """
-    return
+    df=data.groupby(0).agg({1:[max,min]}).reset_index().sort_values(by=0)
+
+    tuples = [tuple(x) for x in df.values]
+    
+    return tuples
 
 
 def pregunta_06():
+    
+    temp = [l.split(",") for l in data[4]]
+    temp
+    dic =[]
+    for i in temp:
+        listunitaria = i
+        for j in listunitaria:
+            x = ()
+            x = tuple(j.split(":"))
+            dic.append(x)
+            dic = sorted(dic)
+    lista3 = []
+    for clave, grupo in itertools.groupby(dic,lambda x:x[0]):
+        listanums = []
+        for cont in grupo:
+            listanums.append(int(cont[1]))
+        trio = (clave,min(listanums),max(listanums))
+        lista3.append(trio)
+    return lista3
+    
     """
     La columna 5 codifica un diccionario donde cada cadena de tres letras corresponde a
     una clave y el valor despues del caracter `:` corresponde al valor asociado a la
@@ -125,10 +175,25 @@ def pregunta_06():
     ]
 
     """
-    return
+    
 
 
 def pregunta_07():
+    
+    zipped = zip(numeros,letras)
+    zipped = list(zipped)
+    zipped.sort(key = lambda x:x[0])
+    lista4 = []
+
+    for clave, grupo in itertools.groupby(zipped,lambda x:x[0]):
+        listaletras = []
+        for cont in grupo:
+            listaletras.append(cont[1])
+            union = (int(clave),listaletras)
+          
+        lista4.append(union)
+    return lista4
+    
     """
     Retorne una lista de tuplas que asocien las columnas 0 y 1. Cada tupla contiene un
     valor posible de la columna 2 y una lista con todas las letras asociadas (columna 1)
@@ -149,10 +214,24 @@ def pregunta_07():
     ]
 
     """
-    return
+
 
 
 def pregunta_08():
+    
+    zipped = sorted(zip(numeros,letras))
+    zipped = list(zipped)
+    lista5 =[]
+
+    for clave, grupo in itertools.groupby(zipped,lambda x:x[0]):
+        listaletras = []
+        for cont in grupo:
+            listaletras.append((cont[1]))
+            sinrep = sorted(set(listaletras))
+            union = (int(clave),list(sinrep))
+        lista5.append(union)
+    return lista5
+    
     """
     Genere una lista de tuplas, donde el primer elemento de cada tupla contiene  el valor
     de la segunda columna; la segunda parte de la tupla es una lista con las letras
@@ -174,10 +253,25 @@ def pregunta_08():
     ]
 
     """
-    return
+   
 
 
 def pregunta_09():
+    
+    temp = [l.split(",") for l in data[4]]
+    temp
+    dic =[]
+    
+    for i in temp:
+        listunitaria = i
+        for j in listunitaria:
+            x = ()
+            x = tuple(j.split(":"))
+            dic.append(x)
+            dic = sorted(dic)
+        registros2 = dict(sorted(list(Counter([x[0] for x in dic]).items())))
+    return registros2
+    
     """
     Retorne un diccionario que contenga la cantidad de registros en que aparece cada
     clave de la columna 5.
@@ -197,10 +291,16 @@ def pregunta_09():
     }
 
     """
-    return
+  
 
 
 def pregunta_10():
+    
+    col4 = [len(l.split(",")) for l in data[3]]
+    col5 = [len(l.split(",")) for l in data[4]]
+    resultado = list(zip(letras,col4,col5))
+    return resultado
+    
     """
     Retorne una lista de tuplas contengan por cada tupla, la letra de la columna 1 y la
     cantidad de elementos de las columnas 4 y 5.
@@ -218,10 +318,12 @@ def pregunta_10():
 
 
     """
-    return
+  
 
 
 def pregunta_11():
+    
+    
     """
     Retorne un diccionario que contengan la suma de la columna 2 para cada letra de la
     columna 4, ordenadas alfabeticamente.
