@@ -18,12 +18,12 @@ import itertools
 from collections import Counter
 
 #leer los datos
-# data = pd.read_csv("data.csv", encoding='ascii', sep="\t", header= None)
-# data
+data = pd.read_csv("data.csv", encoding='ascii', sep="\t", header= None)
+data
 
-# letras = [l for l in data[0]]
-# numeros = [n for n in data[1]]
-# zipped = sorted(zip(letras,numeros))
+letras = [l for l in data[0]]
+numeros = [n for n in data[1]]
+zipped = sorted(zip(letras,numeros))
 
 
 def pregunta_01():
@@ -190,7 +190,6 @@ def pregunta_07():
         for cont in grupo:
             listaletras.append(cont[1])
             union = (int(clave),listaletras)
-          
         lista4.append(union)
     return lista4
     
@@ -253,7 +252,6 @@ def pregunta_08():
     ]
 
     """
-   
 
 
 def pregunta_09():
@@ -291,7 +289,7 @@ def pregunta_09():
     }
 
     """
-  
+
 
 
 def pregunta_10():
@@ -318,10 +316,10 @@ def pregunta_10():
 
 
     """
-  
 
 
-#def pregunta_11():
+
+def pregunta_11():
     
     
     """
@@ -341,10 +339,10 @@ def pregunta_10():
 
 
     """
-#    return 1
+    return 1
 
 
-#def pregunta_12():
+def pregunta_12():
     """
     Genere un diccionario que contengan como clave la columna 1 y como valor la suma de
     los valores de la columna 5 sobre todo el archivo.
@@ -359,4 +357,4 @@ def pregunta_10():
     }
 
     """
-#    return 1
+    return 1
