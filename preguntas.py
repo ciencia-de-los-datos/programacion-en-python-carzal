@@ -341,7 +341,7 @@ def pregunta_11():
 
 
     """
-    return
+    return 1
 
 
 def pregunta_12():
@@ -359,4 +359,4 @@ def pregunta_12():
     }
 
     """
-    return
+    return 1
