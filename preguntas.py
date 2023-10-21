@@ -18,7 +18,7 @@ import itertools
 from collections import Counter
 
 #leer los datos
-data = pd.read_csv("C:/Users/ASUS/Desktop/GitHub/trabajo 1/programacion-en-python-carzal/data.csv", encoding='ascii', sep="\t", header= None)
+data = pd.read_csv("data.csv", encoding='ascii', sep="\t", header= None)
 data
 
 letras = [l for l in data[0]]
