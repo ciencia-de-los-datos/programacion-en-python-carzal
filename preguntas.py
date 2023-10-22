@@ -317,6 +317,99 @@ def pregunta_10():
 
     """
 
+def pregunta_11():
+    
+    col4 = [l[3].split(",") for l in datos]
+    zipped = list(zip(col4,numeros))
+    dic =[]
+    temporal = []
+    for j in zipped:
+        temporal = j[0]
+        for i in temporal:
+            x = list(zip(i,j[1]))
+            dic.append(x)
+    #dic = sorted(dic)
+    
+    dicconv = []
+    for k in dic: 
+        for par in k:
+            b = par
+            dicconv.append(b)
+    dicconv = sorted(dicconv)
 
+    lista6 = []
+    for clave, grupo in itertools.groupby(sorted(dicconv),lambda x:x[0]):
+        z = 0
+        for cont in grupo:
+            z += int(cont[1])
+        pareja = (clave,z)
+        lista6.append(pareja)
+    dic6 = dict(lista6)
+    return dic6
+    
+    """
+    Retorne un diccionario que contengan la suma de la columna 2 para cada letra de la
+    columna 4, ordenadas alfabeticamente.
+
+    Rta/
+    {
+        "a": 122,
+        "b": 49,
+        "c": 91,
+        "d": 73,
+        "e": 86,
+        "f": 134,
+        "g": 35,
+    }
+
+
+    """
+    return
+
+
+def pregunta_12():
+    
+    col4 = [itemgetter(4)(l) for l in datos]
+    pareja = list(zip(letras,col4))
+    patron = re.compile(r"\d+")
+    dic = []
+    for i in pareja:
+        temporal = patron.findall(i[1])
+        dic.append(temporal)
+
+    dic2 = []
+    for j in dic:
+        suma = 0
+        for k in j:
+            suma += int(k)
+        dic2.append(suma)
+    
+    newpareja = list(zip(letras,dic2))
+
+    lista7 = []
+    for clave, grupo in itertools.groupby(sorted(newpareja),lambda x:x[0]):
+        z = 0
+        for cont in grupo:
+            z += int(cont[1])
+        pareja = (clave,z)
+        lista7.append(pareja)
+        dic7 = dict(lista7)
+
+    return dic7
+    """
+    Genere un diccionario que contengan como clave la columna 1 y como valor la suma de
+    los valores de la columna 5 sobre todo el archivo.
+
+    Rta/
+    {
+        'A': 177,
+        'B': 187,
+        'C': 114,
+        'D': 136,
+        'E': 324
+    }
+
+    """
+    return
 
 
