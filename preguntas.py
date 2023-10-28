@@ -11,7 +11,21 @@ Utilice el archivo `data.csv` para resolver las preguntas.
 
 
 """
+#importar librerias
 
+from collections import Counter
+import itertools
+from operator import itemgetter
+import re
+
+with open ("data.csv", "r") as file:
+        datos = file.readlines()
+datos = [line.replace('\t','|').replace('\n','') for line in datos]
+datos = [line.split('|') for line in datos]
+
+letras = [l[0] for l in datos]
+numeros = [n[1] for n in datos]
+zipped = sorted(zip(letras,numeros))
 
 def pregunta_01():
     """
@@ -19,9 +33,11 @@ def pregunta_01():
 
     Rta/
     214
-
     """
-    return
+    x = 0
+    for row in datos:
+        x += int(row[1])
+    return x
 
 
 def pregunta_02():
@@ -39,8 +55,9 @@ def pregunta_02():
     ]
 
     """
-    return
+    registros = sorted(list(Counter([x[0] for x in datos]).items()))
 
+    return registros
 
 def pregunta_03():
     """
@@ -57,7 +74,19 @@ def pregunta_03():
     ]
 
     """
-    return
+    # letras = [l[0] for l in datos]
+    # numeros = [n[1] for n in datos]
+    # zipped = sorted(zip(letras,numeros))
+    list(zipped)
+    lista = []
+    for clave, grupo in itertools.groupby(zipped,lambda x:x[0]):
+        z = 0
+        for cont in grupo:
+            z += int(cont[1])
+        pareja = (clave,z)
+        lista.append(pareja)
+
+    return lista
 
 
 def pregunta_04():
@@ -82,8 +111,9 @@ def pregunta_04():
     ]
 
     """
-    return
-
+    fechas = [f[2].split("-") for f in datos]
+    meses = sorted(list(Counter([x[1] for x in fechas]).items()))
+    return meses
 
 def pregunta_05():
     """
@@ -100,8 +130,17 @@ def pregunta_05():
     ]
 
     """
-    return
+    
+    list(zipped)
+    lista2 = []
+    for clave, grupo in itertools.groupby(zipped,lambda x:x[0]):
+        listanums = []
+        for cont in grupo:
+            listanums.append(int(cont[1]))
+        trio = (clave,max(listanums),min(listanums))
+        lista2.append(trio)
 
+    return lista2
 
 def pregunta_06():
     """
@@ -125,8 +164,25 @@ def pregunta_06():
     ]
 
     """
-    return
+    temp = [l[4].split(",") for l in datos]
+    temp
+    dic =[]
+    for i in temp:
+        listunitaria = i
+        for j in listunitaria:
+            x = ()
+            x = tuple(j.split(":"))
+            dic.append(x)
+    dic = sorted(dic)
 
+    lista3 = []
+    for clave, grupo in itertools.groupby(dic,lambda x:x[0]):
+        listanums = []
+        for cont in grupo:
+            listanums.append(int(cont[1]))
+        trio = (clave,min(listanums),max(listanums))
+        lista3.append(trio)
+    return lista3                                                                                                                                             
 
 def pregunta_07():
     """
@@ -149,8 +205,17 @@ def pregunta_07():
     ]
 
     """
-    return
-
+    zipped = zip(numeros,letras)
+    zipped = list(zipped)
+    zipped.sort(key = lambda x:x[0])
+    lista4 = []
+    for clave, grupo in itertools.groupby(zipped,lambda x:x[0]):
+        listaletras = []
+        for cont in grupo:
+            listaletras.append((cont[1]))
+            union = (int(clave),listaletras)
+        lista4.append(union)
+    return lista4
 
 def pregunta_08():
     """
@@ -174,8 +239,17 @@ def pregunta_08():
     ]
 
     """
-    return
-
+    zipped = sorted(zip(numeros,letras))
+    zipped = list(zipped)
+    lista5 =[]
+    for clave, grupo in itertools.groupby(zipped,lambda x:x[0]):
+        listaletras = []
+        for cont in grupo:
+            listaletras.append((cont[1]))
+            sinrep = sorted(set(listaletras))
+        union = (int(clave),list(sinrep))
+        lista5.append(union)
+    return lista5
 
 def pregunta_09():
     """
@@ -197,8 +271,18 @@ def pregunta_09():
     }
 
     """
-    return
-
+    temp = [l[4].split(",") for l in datos]
+    temp
+    dic =[]
+    for i in temp:
+        listunitaria = i
+        for j in listunitaria:
+            x = ()
+            x = tuple(j.split(":"))
+            dic.append(x)
+    dic = sorted(dic)
+    registros2 = dict(sorted(list(Counter([x[0] for x in dic]).items())))
+    return registros2
 
 def pregunta_10():
     """
@@ -216,10 +300,11 @@ def pregunta_10():
         ("E", 3, 3),
     ]
 
-
     """
-    return
-
+    col4 = [len(l[3].split(",")) for l in datos]
+    col5 = [len(l[4].split(",")) for l in datos]
+    resultado = list(zip(letras,col4,col5))
+    return resultado
 
 def pregunta_11():
     """
@@ -237,10 +322,35 @@ def pregunta_11():
         "g": 35,
     }
 
-
     """
-    return
 
+    col4 = [l[3].split(",") for l in datos]
+    zipped = list(zip(col4,numeros))
+    dic =[]
+    temporal = []
+    for j in zipped:
+        temporal = j[0]
+        for i in temporal:
+            x = list(zip(i,j[1]))
+            dic.append(x)
+    #dic = sorted(dic)
+    
+    dicconv = []
+    for k in dic: 
+        for par in k:
+            b = par
+            dicconv.append(b)
+    dicconv = sorted(dicconv)
+
+    lista6 = []
+    for clave, grupo in itertools.groupby(sorted(dicconv),lambda x:x[0]):
+        z = 0
+        for cont in grupo:
+            z += int(cont[1])
+        pareja = (clave,z)
+        lista6.append(pareja)
+    dic6 = dict(lista6)
+    return dic6
 
 def pregunta_12():
     """
@@ -257,4 +367,33 @@ def pregunta_12():
     }
 
     """
-    return
+    col4 = [itemgetter(4)(l) for l in datos]
+    pareja = list(zip(letras,col4))
+    patron = re.compile(r"\d+")
+    dic = []
+    for i in pareja:
+        temporal = patron.findall(i[1])
+        dic.append(temporal)
+
+    dic2 = []
+    for j in dic:
+        suma = 0
+        for k in j:
+            suma += int(k)
+        dic2.append(suma)
+    
+    newpareja = list(zip(letras,dic2))
+
+    lista7 = []
+    for clave, grupo in itertools.groupby(sorted(newpareja),lambda x:x[0]):
+        z = 0
+        for cont in grupo:
+            z += int(cont[1])
+        pareja = (clave,z)
+        lista7.append(pareja)
+        dic7 = dict(lista7)
+
+    return dic7
+pregunta_12()
+
+
