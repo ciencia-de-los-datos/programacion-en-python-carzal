@@ -13,7 +13,7 @@ Utilice el archivo `data.csv` para resolver las preguntas.
 """
 #importar librerias
 
-dfrom collections import Counter
+from collections import Counter
 import itertools
 from operator import itemgetter
 import re
