@@ -13,13 +13,19 @@ Utilice el archivo `data.csv` para resolver las preguntas.
 """
 #importar librerias
 
-def load_data(name_file):
-    with open(name_file, "r") as file:
-        data = file.readlines()
+dfrom collections import Counter
+import itertools
+from operator import itemgetter
+import re
 
-    data = [line.replace("\n", "") for line in data]
-    data = [line.split("\t") for line in data]
-    return data
+with open ("data.csv", "r") as file:
+        datos = file.readlines()
+datos = [line.replace('\t','|').replace('\n','') for line in datos]
+datos = [line.split('|') for line in datos]
+
+letras = [l[0] for l in datos]
+numeros = [n[1] for n in datos]
+zipped = sorted(zip(letras,numeros))
 
 def pregunta_01():
     """
@@ -28,13 +34,11 @@ def pregunta_01():
     Rta/
     214
     """
-    data = load_data("data.csv")
+    x = 0
+    for row in datos:
+        x += int(row[1])
+    return x
 
-    val = 0
-    for line in data:
-        val += int(line[1])
-    val
-    return val
 
 def pregunta_02():
     """
